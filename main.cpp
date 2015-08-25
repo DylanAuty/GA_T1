@@ -11,6 +11,7 @@
 void genChrom(int size, int (&out)[CHSIZE]);
 void printChrom(int (&in)[CHSIZE]);
 int calcFitness(int(&in)[CHSIZE], int target);
+char parseChar(int(&in)[4]);
 
 using namespace std;
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]){
 	// Assess population fitness
 	for (int i = 0; i < popSize; i++){
 		fitness[i] = calcFitness(pop[i], target);
+		cout << "I: " << i << " Fit:" << fitness[i] << endl;
 	}
 
 
@@ -67,14 +69,21 @@ int calcFitness(int(&in)[CHSIZE], int target){
 	int fitness = 0;
 	int temp[4];
 	int parseRes = 1;
-	for (int i = 0; i < CHSIZE; i+4){
+	for (int i = 0; i < (CHSIZE/4); i++){
 		for (int j = 0; j < 4; j++){
-			temp[j] = in[i + j];
+			temp[j] = in[(4*i) + j];
 		}
-		parseRes *= atoi(parseChar(temp));
+		cout << "CHAR: " << parseChar(temp) - '0' << endl;
+		parseRes *= parseChar(temp) - '0';
 	}
 	// At the end of the chain of multiplications, do some stuff
 	fitness = target - parseRes;
+	int minMax = 75;
+	if (fitness > minMax){
+		fitness = minMax
+	
+	cout << "FITNESS: " << fitness << endl;
+	return fitness;
 }
 
 char parseChar(int(&in)[4]){
@@ -120,27 +129,33 @@ char parseChar(int(&in)[4]){
 	}
 	else if(in[0] == 1 && in[1] == 0 && in[2] == 1 && in[3] == 0){
 		// 1010
-		return '+';
+		//return '+';
+		return '1';
 	}
 	else if(in[0] == 1 && in[1] == 0 && in[2] == 1 && in[3] == 1){
 		// 1011
-		return '-';
+		//return '-';
+		return '1';
 	}
 	else if(in[0] == 1 && in[1] == 1 && in[2] == 0 && in[3] == 0){
 		// 1100
-		return '*';
+		//return '*';
+		return '1';
 	}
 	else if(in[0] == 1 && in[1] == 1 && in[2] == 0 && in[3] == 1){
 		// 1101
-		return '/';
+		//return '/';
+		return '1';
 	}
 	else if(in[0] == 1 && in[1] == 1 && in[2] == 1 && in[3] == 0){
 		// 1110
-		return '%';
+		//return '%';
+		return '1';
 	}
 	else if(in[0] == 1 && in[1] == 1 && in[2] == 1 && in[3] == 1){
 		// 1111
-		return '^';
+		//return '^';
+		return '1';
 	}
 	else {
 		return 'e';
